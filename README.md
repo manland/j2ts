@@ -6,6 +6,8 @@
 
 > npm install j2ts
 
+_Like `j2ts` use [java-class-parser](https://github.com/villadora/java-class-parser), you need to have `javap` in your path._
+
 ## Js Api
 
 ```js
