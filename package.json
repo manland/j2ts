@@ -1,0 +1,19 @@
+{
+  "name": "j2ts",
+  "version": "1.0.0",
+  "description": "A simple java to ts generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run samples && mocha",
+    "samples": "javac samples/*.java && javac samples/*/*.java"
+  },
+  "author": "Romain Maneschi",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "=3.2.0"
+  },
+  "dependencies": {
+    "java-class-parser": "=0.2.1",
+    "node-glob": "=1.2.0"
+  }
+}
