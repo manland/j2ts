@@ -35,11 +35,13 @@ module.exports.generate = (from) => {
     const methodStr = generateMethods.map(m => m.str).join('\n\n    ');
 
     const myFields = [];
-    [].concat(generateMethods.map(m => m.field), fields).forEach(newField => {
-        if(!myFields.some(m => m.name === newField.name)) {
-            myFields.push(newField);
-        }
-    });
+    [].concat(generateMethods.map(m => m.field), fields)
+        .filter(d => d !== undefined)
+        .forEach(newField => {
+            if(!myFields.some(m => m.name === newField.name)) {
+                myFields.push(newField);
+            }
+        });
     const fieldsStr = `${myFields.map(f => Field.generate(f).str).join('\n\n    ')}`;
 
     let body = ``;

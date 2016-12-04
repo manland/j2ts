@@ -12,4 +12,6 @@ export class Primitifs {
 
     public b: boolean;
 
+    public date: string;
+
 }

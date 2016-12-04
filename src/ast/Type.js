@@ -10,6 +10,8 @@ module.exports = (javaType) => {
     } else if(!javaType.startsWith('java')) {
         const name = Util.nameClassWithoutPackage(javaType);
         return {needImport: `import {${name}} from './${name}';`, name: name};
+    } else if(javaType === 'java.time.LocalDate' || 'java.time.LocalDateTime') {
+        return {needImport: false, name: 'string'};
     } else {
         throw new Error(`Unknow type ${javaType}`);
     }

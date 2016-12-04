@@ -11,7 +11,7 @@ module.exports = (filepath) => {
         parser(files, function(err, javaClazz) {
             if(err !== null) return error(err);
 
-            resolve(Object.values(javaClazz));
+            resolve(Object.keys(javaClazz).map(c => javaClazz[c]));
         });
     });
 };
