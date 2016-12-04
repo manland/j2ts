@@ -1,6 +1,8 @@
 const Util = require('./Util');
 
 const primitifsType = {
+    'void': 'void',
+
     'int': 'number',
     'java.lang.Integer': 'number',
     'long': 'number',
