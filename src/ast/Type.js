@@ -1,18 +1,47 @@
 const Util = require('./Util');
 
-module.exports = (javaType) => {
-    if(javaType === 'java.lang.Integer' || javaType === 'java.lang.Long' || javaType === 'java.lang.Float' || javaType === 'java.lang.Double') {
-        return {needImport: false, name: 'number'};
-    } else if(javaType === 'java.lang.String') {
-        return {needImport: false, name: 'string'};
-    } else if(javaType === 'java.lang.Boolean') {
-        return {needImport: false, name: 'boolean'};
-    } else if(!javaType.startsWith('java')) {
-        const name = Util.nameClassWithoutPackage(javaType);
-        return {needImport: `import {${name}} from './${name}';`, name: name};
-    } else if(javaType === 'java.time.LocalDate' || 'java.time.LocalDateTime') {
-        return {needImport: false, name: 'string'};
+const primitifsType = {
+    'java.lang.Integer': 'number',
+    'java.lang.Long': 'number',
+    'java.lang.Float': 'number',
+    'java.lang.Double': 'number',
+
+    'java.lang.String': 'string',
+    'java.lang.Boolean': 'boolean',
+
+    'java.time.LocalDate': 'string',
+    'java.time.LocalDateTime': 'string',
+
+    'java.util.ArrayList': 'Array'
+};
+
+const regexpComposed = /([^<]+)<([^>]+)>/;
+
+const find = (javaType) => {
+    console.log('Type', javaType);
+    if(primitifsType[javaType]) {
+        return {needImport: false, name: primitifsType[javaType]};
     } else {
-        throw new Error(`Unknow type ${javaType}`);
+        const match = regexpComposed.exec(javaType);
+        if(match) {
+            const first = find(match[1]);
+            const second = find(match[2]);
+            const needImport = [first.needImport, second.needImport].reduce((acc, current) => {
+                if(current !== false && acc === false) {
+                    acc = current;
+                } else if(current !== false) {
+                    acc += current;
+                }
+                return acc;
+            }, false);
+            return {needImport: needImport, name: `${first.name}<${second.name}>`};
+        } else if(!javaType.startsWith('java')) {
+            const name = Util.nameClassWithoutPackage(javaType);
+            return {needImport: `import {${name}} from './${name}';`, name: name};
+        } else {
+            throw new Error(`Unknow type ${javaType}`);
+        }
     }
 };
+
+module.exports = find;
