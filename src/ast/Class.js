@@ -5,7 +5,6 @@ const Type = require('./Type');
 
 module.exports.generate = (from) => {
     let {name, scope, methods, fields, describe} = from;
-    console.log('Class', from);
     const imports = [];
 
     if(describe) {

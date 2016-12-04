@@ -6,7 +6,7 @@ const Class = require('./ast/Class');
  * @returns {Promise}
  */
 module.exports = (javaClazz) => {
-    return new Promise((resolve, error) => {
+    return new Promise((resolve) => {
         resolve(javaClazz.map(java => {
             return Class.generate(java);
         }));
