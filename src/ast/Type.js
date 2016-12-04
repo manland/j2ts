@@ -1,12 +1,17 @@
 const Util = require('./Util');
 
 const primitifsType = {
+    'int': 'number',
     'java.lang.Integer': 'number',
+    'long': 'number',
     'java.lang.Long': 'number',
+    'float': 'number',
     'java.lang.Float': 'number',
+    'double': 'number',
     'java.lang.Double': 'number',
 
     'java.lang.String': 'string',
+    'boolean': 'boolean',
     'java.lang.Boolean': 'boolean',
 
     'java.time.LocalDate': 'string',

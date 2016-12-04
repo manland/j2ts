@@ -4,12 +4,17 @@ import java.time.LocalDateTime;
 
 public class Primitifs {
 
-    public Integer i;
-    public Float f;
-    public Double d;
-    public Long l;
-    public String s;
-    public Boolean b;
+    public int i;
+    public Integer I;
+    public float f;
+    public Float F;
+    public double d;
+    public Double D;
+    public long l;
+    public Long L;
+    public String S;
+    public boolean b;
+    public Boolean B;
     public LocalDateTime date;
 
 }
