@@ -54,6 +54,6 @@ module.exports.generate = (from) => {
     const nameWithoutPackage = Util.nameClassWithoutPackage(name);
     return {
         name: nameWithoutPackage,
-        str: `${importsStr}export ${describe}class ${nameWithoutPackage}${father} {\n\n${body}}`
+        str: `${importsStr}export ${describe}class ${nameWithoutPackage}${father} {\n\n${body}}\n`
     };
 };
