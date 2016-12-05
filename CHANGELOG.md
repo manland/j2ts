@@ -2,6 +2,7 @@
   * add newline to generated files
   * add enum
   * **BREAKING** generate has interface (default)
+  * generate `index.ts` exporting all generated files
 * `1.1.0` :
   * add generics
   * add type :

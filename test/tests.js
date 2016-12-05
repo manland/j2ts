@@ -38,11 +38,6 @@ describe('j2ts', function() {
 
     it('should generate enum', function(onDone) {
         j2ts(`${SAMPLES_DIR}/Enum.class`, {generateHasClass: true})
-            .then(res => {
-                console.log(res[0].str);
-                console.log(fs.readFileSync(`${SAMPLES_DIR}/${res[0].name}.ts`, {encoding: 'utf8'}));
-                return res;
-            })
             .then(res => assert.equal(res[0].str, fs.readFileSync(`${SAMPLES_DIR}/${res[0].name}.ts`, {encoding: 'utf8'})))
             .then(onDone, onDone);
     });
@@ -67,6 +62,11 @@ describe('j2ts', function() {
 
     it('should generate Hierarchy has interface ts', function(onDone) {
         j2ts(`${SAMPLES_DIR}/hierarchy/*.class`)
+            .then(res => {
+                console.log(res[0].str);
+                console.log(fs.readFileSync(`${SAMPLES_DIR}/hierarchy/${res[0].name}.ts`, {encoding: 'utf8'}));
+                return res;
+            })
             .then(res => res.forEach(r => assert.equal(r.str, fs.readFileSync(`${SAMPLES_DIR}/hierarchy/${r.name}Interface.ts`, {encoding: 'utf8'}))))
             .then(onDone, onDone);
     });

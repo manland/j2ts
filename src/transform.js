@@ -11,5 +11,10 @@ module.exports = (javaClazz, generateHasClass) => {
             return Class.generate(java, generateHasClass);
         }));
 
+    }).then(clazz => {
+        return clazz.concat(clazz.reduce((acc, current) => {
+            acc.str += `export * from './${current.name}';\n`;
+            return acc;
+        }, {name: 'index', str: ''}));
     });
 };
