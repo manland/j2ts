@@ -6,7 +6,7 @@
 
 > npm install j2ts
 
-_Like `j2ts` use [java-class-parser](https://github.com/villadora/java-class-parser), you need to have `javap` in your path._
+_`j2ts` use [java-class-parser](https://github.com/villadora/java-class-parser) ==> you need to have `javap` in your path._
 
 ## Js Api
 
@@ -22,10 +22,13 @@ j2ts(path, options)
 
 return a promise with an array of {name: className, str: resultTs}.
 
+## Development
+
+> npm run test
+
 ## Roadmap
 
 * add a cli
-* add more java [types](src/ast/Type.js)
 * use package to write file in directories (not flattened)
 
 ## Contribution
