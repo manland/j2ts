@@ -3,9 +3,9 @@ const parse = require('./src/parse');
 const transform = require('./src/transform');
 const write = require('./src/write');
 
-module.exports = (filepath, dest) => {
+module.exports = (filepath, options = {generateHasClass: false, dest: null}) => {
     return load(filepath)
         .then(parse)
-        .then(transform)
-        .then(res => dest ? write(res, dest) : res);
+        .then(res => transform(res, options.generateHasClass))
+        .then(res => options.dest ? write(res, options.dest) : res);
 };

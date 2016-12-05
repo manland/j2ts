@@ -5,10 +5,10 @@ const Class = require('./ast/Class');
  * @param javaClazz array of object<constructors, fields, methods>
  * @returns {Promise}
  */
-module.exports = (javaClazz) => {
+module.exports = (javaClazz, generateHasClass) => {
     return new Promise((resolve) => {
         resolve(javaClazz.map(java => {
-            return Class.generate(java);
+            return Class.generate(java, generateHasClass);
         }));
 
     });

@@ -4,7 +4,7 @@ const Field = require('./Field');
 const Util = require('./Util');
 const Type = require('./Type');
 
-module.exports.generate = (from) => {
+module.exports.generate = (from, generateHasClass) => {
     if(from.extends[0] === 'java.lang.Enum<Enum>') {
         return Enum.generate(from);
     }
@@ -25,7 +25,7 @@ module.exports.generate = (from) => {
         }).join(', ')}`;
     }
 
-    const generateMethods = methods.map(m => Method.generate(m));
+    const generateMethods = methods.map(m => Method.generate(m, generateHasClass)).filter(m => m !== false);
 
     generateMethods.forEach(m => {
         m.needImports.forEach(i => {
@@ -36,7 +36,7 @@ module.exports.generate = (from) => {
     });
     const importsStr = imports.length === 0 ? '' : `${imports.join('\n\n    ')}\n\n`;
 
-    const methodStr = generateMethods.map(m => m.str).join('\n\n    ');
+    const methodStr = generateMethods.filter(m => m.str !== '').map(m => m.str).join('\n\n    ');
 
     const myFields = [];
     [].concat(generateMethods.map(m => m.field), fields)
@@ -46,7 +46,7 @@ module.exports.generate = (from) => {
                 myFields.push(newField);
             }
         });
-    const fieldsStr = `${myFields.map(f => Field.generate(f).str).join('\n\n    ')}`;
+    const fieldsStr = `${myFields.map(f => Field.generate(f, generateHasClass).str).join('\n\n    ')}`;
 
     let body = ``;
     if(fieldsStr) {
@@ -57,8 +57,15 @@ module.exports.generate = (from) => {
     }
 
     const nameWithoutPackage = Util.nameClassWithoutPackage(name);
-    return {
-        name: nameWithoutPackage,
-        str: `${importsStr}export ${describe}class ${nameWithoutPackage}${father} {\n\n${body}}\n`
-    };
+    if(generateHasClass) {
+        return {
+            name: nameWithoutPackage,
+            str: `${importsStr}export ${describe}class ${nameWithoutPackage}${father} {\n\n${body}}\n`
+        };
+    } else {
+        return {
+            name: nameWithoutPackage,
+            str: `${importsStr}export interface ${nameWithoutPackage}${father} {\n\n${body}}\n`
+        };
+    }
 };

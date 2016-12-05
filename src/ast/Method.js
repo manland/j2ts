@@ -1,10 +1,10 @@
 const Type = require('./Type');
 
-module.exports.generate = (from) => {
+module.exports.generate = (from, generateHasClass) => {
     let {ret, name, args} = from;
 
     let field, body = '', needImports = [];
-    if(isSetter(name, args)) {
+    if(isSetter(name, args) && generateHasClass) {
         const fieldName = getterSetterFieldName(name);
         field = {name: `_${fieldName}`, scope: 'private', type: args[0]};
         name = `set ${fieldName}`;
@@ -12,7 +12,12 @@ module.exports.generate = (from) => {
         needImports.push(t.needImport);
         body = `this._${fieldName} = ${t.name.charAt(0).toLowerCase()};`;
         ret = '';
-    } else if(isGetter(name, args)) {
+    } else if(isSetter(name, args) && !generateHasClass) {
+        const fieldName = getterSetterFieldName(name);
+        field = {name: `${fieldName}`, scope: 'public', type: args[0]};
+        const t = Type(args[0]);
+        needImports.push(t.needImport);
+    } else if(isGetter(name, args) && generateHasClass) {
         const fieldName = getterSetterFieldName(name);
         field = {name: `_${fieldName}`, scope: 'private', type: ret};
         name = `get ${fieldName}`;
@@ -20,14 +25,25 @@ module.exports.generate = (from) => {
         const t = Type(ret);
         needImports.push(t.needImport);
         ret = `: ${t.name}`;
-    } else {
+    } else if(isGetter(name, args) && !generateHasClass) {
+        const fieldName = getterSetterFieldName(name);
+        field = {name: `${fieldName}`, scope: 'public', type: ret};
+        const t = Type(ret);
+        needImports.push(t.needImport);
+    }  else {
         const t = Type(ret);
         needImports.push(t.needImport);
         ret = `: ${t.name}`;
     }
+    let str;
+    if(generateHasClass) {
+        str = `${name}(${generateArgs(args, needImports)})${ret} {\n        ${body}\n    }`;
+    } else {
+        str = ``;
+    }
     return {
-        str: `${name}(${generateArgs(args, needImports)})${ret} {\n        ${body}\n    }`,
-        field: field,
+        str,
+        field,
         needImports: needImports.filter(i => i !== false)
     };
 };
