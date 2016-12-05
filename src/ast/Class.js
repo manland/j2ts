@@ -1,9 +1,14 @@
+const Enum = require('./Enum');
 const Method = require('./Method');
 const Field = require('./Field');
 const Util = require('./Util');
 const Type = require('./Type');
 
 module.exports.generate = (from) => {
+    if(from.extends[0] === 'java.lang.Enum<Enum>') {
+        return Enum.generate(from);
+    }
+
     let {name, scope, methods, fields, describe} = from;
     const imports = [];
 

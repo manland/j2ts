@@ -32,7 +32,6 @@ const primitivesType = {
 const regexpComposed = /([^<]+)<([^>]+)>/;
 
 const find = (javaType) => {
-    console.log('Type', javaType);
     if(primitivesType[javaType]) {
         return {needImport: false, name: primitivesType[javaType]};
     } else {

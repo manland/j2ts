@@ -32,6 +32,12 @@ describe('j2ts', function() {
 
     it('should generate generic ts', function(onDone) {
         j2ts(`${SAMPLES_DIR}/Generic.class`)
+            .then(res => assert.equal(res[0].str, fs.readFileSync(`${SAMPLES_DIR}/${res[0].name}.ts`, {encoding: 'utf8'})))
+            .then(onDone, onDone);
+    });
+
+    it('should generate enum', function(onDone) {
+        j2ts(`${SAMPLES_DIR}/Enum.class`)
             .then(res => {
                 console.log(res[0].str);
                 console.log(fs.readFileSync(`${SAMPLES_DIR}/${res[0].name}.ts`, {encoding: 'utf8'}));

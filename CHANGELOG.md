@@ -1,3 +1,6 @@
+* `1.2.0` :
+  * add newline to generated files
+  * add enum
 * `1.1.0` :
   * add generics
   * add type :

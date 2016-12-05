@@ -24,7 +24,6 @@ return a promise with an array of {name: className, str: resultTs}.
 
 * add a cli
 * add more java [types](src/ast/Type.js)
-* add java generics to ts generics
 * use package to write file in directories (not flattened)
 
 ## Contribution
