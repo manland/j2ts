@@ -2,7 +2,7 @@ var parser = require('java-class-parser');
 
 /**
  *
- * @param filepath
+ * @param files
  * @returns {Promise} array of object<constructors, fields, methods>
  */
 module.exports = (files) => {

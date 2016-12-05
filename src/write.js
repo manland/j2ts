@@ -3,6 +3,7 @@ const fs = require('fs');
 /**
  * Write res
  * @param tsClazz
+ * @param dest
  * @returns {Promise}
  */
 module.exports = (tsClazz, dest) => {

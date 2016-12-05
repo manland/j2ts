@@ -9,7 +9,7 @@ module.exports.generate = (from) => {
         return Enum.generate(from);
     }
 
-    let {name, scope, methods, fields, describe} = from;
+    let {name, methods, fields, describe} = from;
     const imports = [];
 
     if(describe) {

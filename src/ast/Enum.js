@@ -1,8 +1,7 @@
 const Util = require('./Util');
 
 module.exports.generate = (from) => {
-    let {name, fields} = from;
-    console.log(from);
+    const {name, fields} = from;
 
     const nameWithoutPackage = Util.nameClassWithoutPackage(name);
     return {

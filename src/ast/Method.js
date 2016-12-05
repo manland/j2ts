@@ -1,7 +1,7 @@
 const Type = require('./Type');
 
 module.exports.generate = (from) => {
-    let {scope, ret, name, args} = from;
+    let {ret, name, args} = from;
 
     let field, body = '', needImports = [];
     if(isSetter(name, args)) {
