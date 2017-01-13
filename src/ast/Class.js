@@ -5,7 +5,7 @@ const Util = require('./Util');
 const Type = require('./Type');
 
 module.exports.generate = (from, generateHasClass) => {
-    if(from.extends[0] === 'java.lang.Enum<Enum>') {
+    if(from.extends.length > 0 && from.extends[0].startsWith('java.lang.Enum')) {
         return Enum.generate(from);
     }
 
