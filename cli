@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var argv = require('yargs')
+    .usage('Usage: $0 -f [glob] -g [bool] -d [path]')
+    .demandOption(['filepath'])
+    .describe('filepath', 'A glob pattern to load java .class')
+    .alias('f', 'filepath')
+    .boolean('generateHasClass')
+    .default('generateHasClass', false)
+    .describe('generateHasClass', 'If true generated code is ts class based, else is interface')
+    .alias('g', 'generateHasClass')
+    .default('dest', null)
+    .describe('dest', 'Where to put generated file, if not set, generated code will be printed in console.')
+    .alias('d', 'dest')
+    .argv;
+
+require('./index')(argv.filepath, {generateHasClass: argv.generateHasClass, dest: argv.dest}).then(res => {
+    if(argv.dest === null) {
+        res.forEach(clazz => console.log(clazz.str));
+    }
+});

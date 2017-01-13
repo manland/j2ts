@@ -6,7 +6,7 @@
 
 > npm install j2ts
 
-_`j2ts` use [java-class-parser](https://github.com/villadora/java-class-parser) ==> you need to have `javap` in your path._
+_`j2ts` use `javap` to extract meta-data of your java classes. So, you need to have it in on your system (installed with jdk)._
 
 ## Js Api
 
@@ -22,14 +22,23 @@ j2ts(path, options)
 
 return a promise with an array of {name: className, str: resultTs}.
 
+## CLI
+
+After install, add a script in your `package.json` :
+
+```json
+{
+    "scripts": {
+        "j2ts": "j2ts -f \"[glob]\" -d \"path\""
+    }
+}
+```
+
+To see all options run `j2ts --help`
+
 ## Development
 
 > npm run test
-
-## Roadmap
-
-* add a cli
-* use package to write file in directories (not flattened)
 
 ## Contribution
 
