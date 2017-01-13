@@ -1,3 +1,5 @@
+* `???` :
+  * fix enum with `_` in name
 * `1.2.0` :
   * add newline to generated files
   * add enum

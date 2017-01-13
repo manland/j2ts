@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const j2ts = require('../index');
 
-const SAMPLES_DIR = `${__dirname}/../samples`;
+const SAMPLES_DIR = `${__dirname}/samples`;
 
 describe('j2ts', function() {
 

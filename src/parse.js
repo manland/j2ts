@@ -1,4 +1,4 @@
-var parser = require('java-class-parser');
+var parser = require('./parser/java-class-parser');
 
 /**
  *

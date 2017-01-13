@@ -4,8 +4,8 @@
   "description": "A simple java to ts generator",
   "main": "index.js",
   "scripts": {
-    "test": "npm run samples && mocha",
-    "samples": "javac samples/*.java && javac samples/*/*.java"
+    "test": "npm run samples && mocha --recursive",
+    "samples": "javac test/*/*.java && javac test/*/*/*.java"
   },
   "author": "Romain Maneschi",
   "license": "MIT",
@@ -13,7 +13,6 @@
     "mocha": "=3.2.0"
   },
   "dependencies": {
-    "java-class-parser": "=0.2.1",
     "node-glob": "=1.2.0"
   }
 }
