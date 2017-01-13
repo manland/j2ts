@@ -23,7 +23,8 @@ const primitivesType = {
     'java.util.List': 'Array',
     'java.util.ArrayList': 'Array',
     'java.util.Iterator': 'Array',
-    'java.util.Set': 'Array',
+
+    'java.util.Set': 'Set',
 
     'java.util.Map': 'Map',
     'java.util.HashMap': 'Map'

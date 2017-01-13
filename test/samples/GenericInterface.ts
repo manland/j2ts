@@ -8,6 +8,8 @@ export interface Generic {
 
     floats: Array<number>;
 
-    booleans: Array<boolean>;
+    booleans: Set<boolean>;
+
+    stringsBooleans: Map<string, boolean>;
 
 }

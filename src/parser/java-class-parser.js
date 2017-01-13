@@ -45,7 +45,7 @@ module.exports = function(files, options, cb) {
 };
 
 
-var typeRegex = '[a-zA-Z0-9\\.<>\\?\\$\\[\\]]+';
+var typeRegex = '[a-zA-Z0-9\\.<>\\?\\$\\[\\],]+';
 
 
 var classRegex = new RegExp('(?:(public|private|protected) )?((?:(?:static|abstract|final) ?)*)(class|interface) (' + typeRegex + ') (?:extends ((?:' + typeRegex +'),?)+ )?(?:implements ((?:[a-zA-Z0-9\\.<>\\?\\$])+,?)+ )?{([^}]+)}', 'gm');
@@ -80,6 +80,9 @@ function outputParser(output) {
         };
 
         classBody.forEach(function(member) {
+            if(member.includes('<')) {
+                member = member.replace(/<(.*)>/, (match) => match.split(', ').join(','));
+            }
             var signature = methodRegex.exec(member);
             if (!signature)  {
                 signature = fieldRegex.exec(member);

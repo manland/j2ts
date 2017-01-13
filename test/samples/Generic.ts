@@ -8,6 +8,8 @@ export class Generic {
 
     public floats: Array<number>;
 
-    public booleans: Array<boolean>;
+    public booleans: Set<boolean>;
+
+    public stringsBooleans: Map<string, boolean>;
 
 }

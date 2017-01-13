@@ -14,7 +14,6 @@ public class Generic {
     public ArrayList<String> strings;
     public Iterator<Float> floats;
     public Set<Boolean> booleans;
-
-    //public Map<String, Boolean> stringsBooleans;
+    public Map<String, Boolean> stringsBooleans;
 
 }

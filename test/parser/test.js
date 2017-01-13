@@ -125,5 +125,24 @@ describe('test', function() {
         });
     });
 
+    it('test multiple generics MultipleGenerics.class', function(done) {
+        parser([path.join(__dirname, './fixtures/MultipleGenerics.class')], function(err, rs) {
+            var iface = rs['fixtures.MultipleGenerics'];
+
+            assert(iface);
+            assert.equal(iface.name, 'fixtures.MultipleGenerics');
+            assert.equal(iface.scope, 'public');
+            assert.equal(iface.type, 'interface');
+            assert.equal(iface.describe, '');
+            assert.equal(iface.extends.length, 0);
+            assert.equal(iface.constructors.length, 0);
+
+            assert.equal(iface.methods[0].ret, 'java.util.Collection<java.lang.Long>');
+            assert.equal(iface.methods[1].ret, 'java.util.Map<java.lang.String,java.lang.String>');
+
+            done();
+        });
+    });
+
 
 });
