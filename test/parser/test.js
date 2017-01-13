@@ -7,8 +7,7 @@ var parser = require('../../src/parser/java-class-parser');
 describe('test', function() {
     this.timeout(10000);
     it('test read Test.class', function(done) {
-        parser([path.join(__dirname, './fixtures/Test.class')], function(err, rs) {
-            if(err) return done(err);
+        parser([path.join(__dirname, './fixtures/Test.class')]).then(rs => {
             var test = rs['Test'];
             assert(test);
 
@@ -43,7 +42,7 @@ describe('test', function() {
     });
 
     it('test innerClass Test$InnerClass.class', function(done) {
-        parser([path.join(__dirname, './fixtures/Test$InnerClass.class')], function(err, rs) {
+        parser([path.join(__dirname, './fixtures/Test$InnerClass.class')]).then(rs => {
             var inner = rs['Test$InnerClass'];
 
             assert(inner);
@@ -56,7 +55,7 @@ describe('test', function() {
     });
 
     it('test interfacae Interface.class', function(done) {
-        parser([path.join(__dirname, './fixtures/Interface.class')], function(err, rs) {
+        parser([path.join(__dirname, './fixtures/Interface.class')]).then(rs => {
             var iface = rs['fixtures.Interface'];
 
             assert(iface);
@@ -85,7 +84,7 @@ describe('test', function() {
 
 
     it('test innerClass Test$InnerClass.class', function(done) {
-        parser([path.join(__dirname, './fixtures/Test$InnerClass.class')], function(err, rs) {
+        parser([path.join(__dirname, './fixtures/Test$InnerClass.class')]).then(rs => {
             var inner = rs['Test$InnerClass'];
 
             assert(inner);
@@ -98,7 +97,7 @@ describe('test', function() {
     });
 
     it('test enum EnumTest.class', function(done) {
-        parser([path.join(__dirname, './fixtures/EnumTest.class')], function(err, rs) {
+        parser([path.join(__dirname, './fixtures/EnumTest.class')]).then(rs => {
             var ennum = rs['EnumTest'];
 
             assert(ennum);
@@ -126,7 +125,7 @@ describe('test', function() {
     });
 
     it('test multiple generics MultipleGenerics.class', function(done) {
-        parser([path.join(__dirname, './fixtures/MultipleGenerics.class')], function(err, rs) {
+        parser([path.join(__dirname, './fixtures/MultipleGenerics.class')]).then(rs => {
             var iface = rs['fixtures.MultipleGenerics'];
 
             assert(iface);

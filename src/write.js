@@ -7,8 +7,7 @@ const fs = require('fs');
  * @returns {Promise}
  */
 module.exports = (tsClazz, dest) => {
-    return Promise.all(tsClazz.map(c => {
-        return new Promise((resolve, error) => {
+    return Promise.all(tsClazz.map(c => new Promise((resolve, error) => {
             fs.writeFile(`${dest}/${c.name}.ts`, c.str, (err) => {
                 if(err) {
                     error(err);
@@ -16,6 +15,6 @@ module.exports = (tsClazz, dest) => {
                     resolve(c);
                 }
             });
-        });
-    }));
+        })
+    ));
 };

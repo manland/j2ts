@@ -1,73 +1,47 @@
-var spawn = require('child_process').spawn;
-var cmd = 'javap';
+const spawn = require('child_process').spawn;
 
+module.exports = function(files) {
+    return new Promise((resolve, reject) => {
+        files = files || [];
 
-module.exports = function(files, options, cb) {
-    files = files || [];
-    if (typeof options == 'function') {
-        cb = options;
-        options = undefined;
-    }
+        files = files.filter(file => /\.class$/.test(file));
 
-    options = options || {};
+        let output = '';
+        let error = '';
+        const child = spawn('javap', ['-public'].concat(files));
 
-    if (options.args && (typeof options.outputParser != 'function')) {
-        throw new Error('Please provide custom parser for ouput when providing new arguments');
-    }
+        child.stdout.on('data', data => output += '' + data);
+        child.stderr.on('data', data => error += '' + data);
 
-    var parse = options.outputParser || outputParser;
+        child.on('close', code => {
+            if (code !== 0) {
+                return reject(Object.assign(new Error(error), {code}));
+            }
 
-    files = files.filter(function(file) { return /\.class$/.test(file); });
-
-    var output = '';
-    var error = '';
-    var child = spawn(cmd, (options.args ? options.args : ['-public']).concat(files));
-
-    child.stdout.on('data', function (data) {
-        output += '' + data;
+            resolve(outputParser(output));
+        });
     });
-
-    child.stderr.on('data', function (data) {
-        error += '' + data;
-    });
-
-    child.on('close', function (code) {
-        if (code !== 0) {
-            var err = new Error(error);
-            err.code = code;
-            return cb(err);
-        }
-
-        // success
-        cb(null, parse(output));
-    });
-
 };
 
 
-var typeRegex = '[a-zA-Z0-9\\.<>\\?\\$\\[\\],]+';
-
-
-var classRegex = new RegExp('(?:(public|private|protected) )?((?:(?:static|abstract|final) ?)*)(class|interface) (' + typeRegex + ') (?:extends ((?:' + typeRegex +'),?)+ )?(?:implements ((?:[a-zA-Z0-9\\.<>\\?\\$])+,?)+ )?{([^}]+)}', 'gm');
-//                             access modifier              return value             name
-var methodRegex = new RegExp('(?:(public|private|protected) )?((?:static|abstract|final) ?)*(?:(' + typeRegex + ') )?([a-zA-Z]+)\\(([^\\)]*)\\)');
-
-
-var fieldRegex = new RegExp('(?:(public|private|protected) )?((?:(?:static|abstract|final) ?)*)(' + typeRegex + ') ([a-zA-Z0-9_]+)');
+const typeRegex = '[a-zA-Z0-9\\.<>\\?\\$\\[\\],]+';
+const classRegex = new RegExp(`(?:(public|private|protected) )?((?:(?:static|abstract|final) ?)*)(class|interface) (${typeRegex}) (?:extends ((?:${typeRegex}),?)+ )?(?:implements ((?:[a-zA-Z0-9\\.<>\\?\\$])+,?)+ )?{([^}]+)}`, 'gm');
+const methodRegex = new RegExp(`(?:(public|private|protected) )?((?:static|abstract|final) ?)*(?:(${typeRegex}) )?([a-zA-Z]+)\\(([^\\)]*)\\)`);
+const fieldRegex = new RegExp(`(?:(public|private|protected) )?((?:(?:static|abstract|final) ?)*)(${typeRegex}) ([a-zA-Z0-9_]+)`);
 
 function outputParser(output) {
-    var rs = {};
-    var or = classRegex.exec(output);
+    const rs = {};
+    let or = classRegex.exec(output);
 
     while(or) {
-        var scope = or[1] || 'package';
-        var describe = or[2];
-        var type = or[3];
-        var className = or[4];
-        var exts = or[5];
-        var impls = or[6];
-        var classBody = or[7].split('\n').filter(Boolean).map(trimStr);
-        var clz = {
+        const scope = or[1] || 'package';
+        const describe = or[2];
+        const type = or[3];
+        const className = or[4];
+        const exts = or[5];
+        const impls = or[6];
+        const classBody = or[7].split('\n').filter(Boolean).map(trimStr);
+        const clz = {
             name: className,
             type: type,
             scope: scope,
@@ -79,18 +53,18 @@ function outputParser(output) {
             methods: []
         };
 
-        classBody.forEach(function(member) {
+        classBody.forEach(member => {
             if(member.includes('<')) {
                 member = member.replace(/<(.*)>/, (match) => match.split(', ').join(','));
             }
-            var signature = methodRegex.exec(member);
+            let signature = methodRegex.exec(member);
             if (!signature)  {
                 signature = fieldRegex.exec(member);
                 if (signature) {
-                    var scope = signature[1] || 'package';
-                    var describe = (signature[2] || '').trim();
-                    var type = signature[3];
-                    var name = signature[4];
+                    const scope = signature[1] || 'package';
+                    const describe = (signature[2] || '').trim();
+                    const type = signature[3];
+                    const name = signature[4];
                     clz.fields.push({
                         name: name,
                         scope: scope,
@@ -102,13 +76,13 @@ function outputParser(output) {
                 return;
             }
 
-            var scope = signature[1] || 'package';
-            var describe = (signature[2] || '').trim();
-            var retVal = signature[3];
-            var name = signature[4];
-            var args = signature[5];
+            const scope = signature[1] || 'package';
+            const describe = (signature[2] || '').trim();
+            const retVal = signature[3];
+            const name = signature[4];
+            const args = signature[5];
             if (retVal == undefined) { // no ret, constructor
-                var cons = {
+                const cons = {
                     scope: scope,
                     name: name,
                     describe: describe,
@@ -116,8 +90,8 @@ function outputParser(output) {
                 };
 
                 clz.constructors.push(cons);
-            }else {
-                var m = {
+            } else {
+                const m = {
                     scope: scope,
                     describe: describe,
                     ret: retVal,

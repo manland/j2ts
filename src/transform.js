@@ -7,10 +7,7 @@ const Class = require('./ast/Class');
  */
 module.exports = (javaClazz, generateHasClass) => {
     return new Promise((resolve) => {
-        resolve(javaClazz.map(java => {
-            return Class.generate(java, generateHasClass);
-        }));
-
+        resolve(javaClazz.map(java => Class.generate(java, generateHasClass)));
     }).then(clazz => {
         return clazz.concat(clazz.reduce((acc, current) => {
             acc.str += `export * from './${current.name}';\n`;
