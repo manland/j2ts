@@ -1,5 +1,8 @@
-* `???` :
-  * fix enum with `_` in name
+* `1.3.0` :
+  * Integrate code of `java-class-parser` because project is abandoned.
+  * close #4 : enum with `_` in name
+  * close #2 : add multiple generics (eg : java.util.Map...)
+  * close #6 : add a cli, usage `j2ts --help`
 * `1.2.0` :
   * add newline to generated files
   * add enum

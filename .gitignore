@@ -2,3 +2,4 @@
 bin
 node_modules
 test/**/*.class
+npm-debug.log
