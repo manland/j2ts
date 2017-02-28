@@ -1,3 +1,8 @@
+* `1.3.1` :
+    * add type :
+        * java.lang.Object -> any
+        * java.util.UUID -> string
+        * java.time.ZonedDateTime -> string
 * `1.3.0` :
   * Integrate code of `java-class-parser` because project is abandoned.
   * close #4 : enum with `_` in name
