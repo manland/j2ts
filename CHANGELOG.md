@@ -1,5 +1,6 @@
-* `1.3.1` :
-    * add type :
+* `1.4.0` :
+    * add `index.d.ts` to use j2ts with typescript
+    * add type thx to [@Bliinky](https://github.com/Bliinky):
         * java.lang.Object -> any
         * java.util.UUID -> string
         * java.time.ZonedDateTime -> string
