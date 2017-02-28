@@ -2,6 +2,7 @@ const Util = require('./Util');
 
 const primitivesType = {
     'void': 'void',
+    'java.lang.Object': 'any',
 
     'int': 'number',
     'java.lang.Integer': 'number',
@@ -18,6 +19,7 @@ const primitivesType = {
 
     'java.time.LocalDate': 'string',
     'java.time.LocalDateTime': 'string',
+    'java.time.ZonedDateTime': 'string',
 
     'java.util.Collection': 'Array',
     'java.util.List': 'Array',
@@ -27,7 +29,11 @@ const primitivesType = {
     'java.util.Set': 'Set',
 
     'java.util.Map': 'Map',
-    'java.util.HashMap': 'Map'
+    'java.util.HashMap': 'Map',
+
+    'java.util.UUID': 'string'
+
+
 };
 
 const regexpComposed = /([^<]+)<([^>]+)>/;
