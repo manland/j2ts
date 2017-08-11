@@ -13,11 +13,11 @@
   "author": "Romain Maneschi",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "=3.2.0"
+    "mocha": "=3.5.0"
   },
   "dependencies": {
     "node-glob": "=1.2.0",
-    "yargs": "=6.6.0"
+    "yargs": "=8.0.2"
   },
   "repository": {
     "type": "git",
